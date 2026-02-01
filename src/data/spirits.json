@@ -1,0 +1,43 @@
+[
+  { "name": "A Spread of Rampant Green", "expansion": "Base Game", "complexity": "Low" },
+  { "name": "Lightning's Swift Strike", "expansion": "Base Game", "complexity": "Low" },
+  { "name": "River Surges in Sunlight", "expansion": "Base Game", "complexity": "Low" },
+  { "name": "Shadows Flicker Like Flame", "expansion": "Base Game", "complexity": "Low" },
+  { "name": "Thunderspeaker", "expansion": "Base Game", "complexity": "Moderate" },
+  { "name": "Vital Strength of the Earth", "expansion": "Base Game", "complexity": "Low" },
+  { "name": "Ocean's Hungry Grasp", "expansion": "Base Game", "complexity": "High" },
+  { "name": "Bringer of Dreams and Nightmares", "expansion": "Base Game", "complexity": "High" },
+
+  { "name": "Sharp Fangs Behind the Leaves", "expansion": "Branch & Claw", "complexity": "Moderate" },
+  { "name": "Keeper of the Forbidden Wilds", "expansion": "Branch & Claw", "complexity": "Moderate" },
+
+  { "name": "Heart of the Wildfire", "expansion": "Jagged Earth", "complexity": "High" },
+  { "name": "Serpent Slumbering Beneath the Island", "expansion": "Jagged Earth", "complexity": "High" },
+  { "name": "Lure of the Deep Wilderness", "expansion": "Jagged Earth", "complexity": "Moderate" },
+  { "name": "Many Minds Move as One", "expansion": "Jagged Earth", "complexity": "Moderate" },
+  { "name": "Shifting Memory of Ages", "expansion": "Jagged Earth", "complexity": "Moderate" },
+  { "name": "Grinning Trickster Stirs Up Trouble", "expansion": "Jagged Earth", "complexity": "Moderate" },
+  { "name": "Shroud of Silent Mist", "expansion": "Jagged Earth", "complexity": "High" },
+  { "name": "Vengeance as a Burning Plague", "expansion": "Jagged Earth", "complexity": "High" },
+  { "name": "Stone's Unyielding Defiance", "expansion": "Jagged Earth", "complexity": "Moderate" },
+  { "name": "Fractured Days Split the Sky", "expansion": "Jagged Earth", "complexity": "Very High" },
+  { "name": "Starlight Seeks Its Form", "expansion": "Jagged Earth", "complexity": "Very High" },
+  { "name": "Volcano Looming High", "expansion": "Jagged Earth", "complexity": "Moderate" },
+
+  { "name": "Downpour Drenches the World", "expansion": "Feather & Flame", "complexity": "High" },
+  { "name": "Finder of Paths Unseen", "expansion": "Feather & Flame", "complexity": "Very High" },
+
+  { "name": "Breath of Darkness Down Your Spine", "expansion": "Nature Incarnate", "complexity": "High" },
+  { "name": "Devouring Teeth Lurk Underfoot", "expansion": "Nature Incarnate", "complexity": "Moderate" },
+  { "name": "Ember-Eyed Behemoth", "expansion": "Nature Incarnate", "complexity": "High" },
+  { "name": "Eyes Watch From the Trees", "expansion": "Nature Incarnate", "complexity": "Moderate" },
+  { "name": "Fathomless Mud of the Swamp", "expansion": "Nature Incarnate", "complexity": "Moderate" },
+  { "name": "Hearth-Vigil", "expansion": "Nature Incarnate", "complexity": "Moderate" },
+  { "name": "Relentless Gaze of the Sun", "expansion": "Nature Incarnate", "complexity": "High" },
+  { "name": "Rising Heat of Stone and Sand", "expansion": "Nature Incarnate", "complexity": "Moderate" },
+  { "name": "Sun-Bright Whirlwind", "expansion": "Nature Incarnate", "complexity": "High" },
+  { "name": "Towering Roots of the Jungle", "expansion": "Nature Incarnate", "complexity": "Moderate" },
+  { "name": "Wandering Voice Keens Deathknell", "expansion": "Nature Incarnate", "complexity": "High" },
+  { "name": "Wounded Waters Bleeding", "expansion": "Nature Incarnate", "complexity": "High" },
+  { "name": "Dances Up Earthquakes", "expansion": "Nature Incarnate", "complexity": "High" }
+]

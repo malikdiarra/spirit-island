@@ -1,0 +1,144 @@
+.app {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+h1 {
+  color: #2d4a22;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.controls label {
+  font-size: 1rem;
+  color: #3b3b3b;
+  font-weight: 600;
+}
+
+.controls select {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 2px solid #7a9a5a;
+  border-radius: 6px;
+  background: #fff;
+  color: #2d4a22;
+  cursor: pointer;
+}
+
+.randomize-btn {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #4a7c2e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.randomize-btn:hover {
+  background: #3a6422;
+}
+
+.randomize-btn:active {
+  background: #2d4a1a;
+}
+
+.spirit-count {
+  color: #777;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.spirit-card {
+  background: #f5f0e8;
+  border: 2px solid #c9b99a;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  text-align: left;
+}
+
+.player-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #7a6b4e;
+  margin-bottom: 0.25rem;
+}
+
+.spirit-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d4a22;
+  margin-bottom: 0.4rem;
+}
+
+.spirit-details {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.spirit-expansion {
+  color: #666;
+}
+
+.spirit-complexity {
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+.spirit-complexity.low {
+  background: #d4edda;
+  color: #2d6a3f;
+}
+
+.spirit-complexity.moderate {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.spirit-complexity.high {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.spirit-complexity.very-high {
+  background: #d6c5e0;
+  color: #5a2d82;
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 1rem 0.75rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .spirit-name {
+    font-size: 1.05rem;
+  }
+}
