@@ -43,8 +43,8 @@ function App() {
   const filteredBoards = boards.filter((b) =>
     enabledExpansions.has(b.expansion)
   );
-  const filteredAdversaries = adversaries.filter((a) =>
-    enabledExpansions.has(a.expansion)
+  const filteredAdversaries = adversaries.filter(
+    (a) => a.expansion === null || enabledExpansions.has(a.expansion)
   );
   const filteredScenarios = scenarios.filter(
     (s) => s.expansion === null || enabledExpansions.has(s.expansion)
@@ -104,8 +104,7 @@ function App() {
 
   const canRandomize =
     filteredSpirits.length >= playerCount &&
-    filteredBoards.length >= playerCount &&
-    filteredAdversaries.length > 0;
+    filteredBoards.length >= playerCount;
 
   return (
     <div className="app">
@@ -172,26 +171,30 @@ function App() {
             ))}
           </div>
 
-          {adversary && scenario && (
+          {adversary && scenario && (adversary.expansion !== null || scenario.expansion !== null) && (
             <div className="game-setup">
               <h2 className="game-setup-heading">Game Setup</h2>
               <div className="game-setup-cards">
-                <GameSetupCard
-                  label="Adversary"
-                  name={adversary.name}
-                  detail={`Level ${adversary.selectedLevel.level} (Difficulty ${adversary.selectedLevel.difficulty})`}
-                  expansion={adversary.expansion}
-                />
-                <GameSetupCard
-                  label="Scenario"
-                  name={scenario.name}
-                  detail={
-                    scenario.difficulty > 0
-                      ? `Difficulty ${scenario.difficulty}`
-                      : null
-                  }
-                  expansion={scenario.expansion}
-                />
+                {adversary.expansion !== null && (
+                  <GameSetupCard
+                    label="Adversary"
+                    name={adversary.name}
+                    detail={`Level ${adversary.selectedLevel.level} (Difficulty ${adversary.selectedLevel.difficulty})`}
+                    expansion={adversary.expansion}
+                  />
+                )}
+                {scenario.expansion !== null && (
+                  <GameSetupCard
+                    label="Scenario"
+                    name={scenario.name}
+                    detail={
+                      scenario.difficulty > 0
+                        ? `Difficulty ${scenario.difficulty}`
+                        : null
+                    }
+                    expansion={scenario.expansion}
+                  />
+                )}
               </div>
             </div>
           )}

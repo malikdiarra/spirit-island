@@ -1,5 +1,10 @@
 [
   {
+    "name": "No Adversary",
+    "expansion": null,
+    "levels": [{ "level": 0, "difficulty": 0 }]
+  },
+  {
     "name": "Brandenburg-Prussia",
     "expansion": "Base Game",
     "levels": [
