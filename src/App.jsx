@@ -36,6 +36,7 @@ function App() {
   const [enabledExpansions, setEnabledExpansions] = useState(
     () => new Set(ALL_EXPANSIONS)
   );
+  const [targetDifficulty, setTargetDifficulty] = useState(null);
 
   const filteredSpirits = spirits.filter((s) =>
     enabledExpansions.has(s.expansion)
@@ -50,6 +51,27 @@ function App() {
     (s) => s.expansion === null || enabledExpansions.has(s.expansion)
   );
 
+  const allCombos = [];
+  for (const adv of filteredAdversaries) {
+    for (const level of adv.levels) {
+      for (const scen of filteredScenarios) {
+        allCombos.push({ adversary: adv, level, scenario: scen });
+      }
+    }
+  }
+
+  const maxDifficulty = allCombos.reduce(
+    (max, c) => Math.max(max, c.level.difficulty + c.scenario.difficulty),
+    0
+  );
+
+  const matchingCombos =
+    targetDifficulty === null
+      ? allCombos
+      : allCombos.filter(
+          (c) => c.level.difficulty + c.scenario.difficulty === targetDifficulty
+        );
+
   const maxPlayers = Math.min(6, filteredSpirits.length, filteredBoards.length);
 
   useEffect(() => {
@@ -57,6 +79,12 @@ function App() {
       setPlayerCount(maxPlayers);
     }
   }, [maxPlayers, playerCount]);
+
+  useEffect(() => {
+    if (targetDifficulty !== null && targetDifficulty > maxDifficulty) {
+      setTargetDifficulty(null);
+    }
+  }, [targetDifficulty, maxDifficulty]);
 
   function toggleExpansion(name) {
     setEnabledExpansions((prev) => {
@@ -68,6 +96,7 @@ function App() {
       }
       return next;
     });
+    setTargetDifficulty(null);
     clearAll();
   }
 
@@ -78,21 +107,28 @@ function App() {
     const shuffledBoards = shuffleArray(filteredBoards);
     setBoardAssignments(shuffledBoards.slice(0, playerCount));
 
-    const randomAdversary =
-      filteredAdversaries[
-        Math.floor(Math.random() * filteredAdversaries.length)
-      ];
-    const randomLevel =
-      randomAdversary.levels[
-        Math.floor(Math.random() * randomAdversary.levels.length)
-      ];
-    setAdversary({ ...randomAdversary, selectedLevel: randomLevel });
+    if (targetDifficulty !== null) {
+      const combo =
+        matchingCombos[Math.floor(Math.random() * matchingCombos.length)];
+      setAdversary({ ...combo.adversary, selectedLevel: combo.level });
+      setScenario(combo.scenario);
+    } else {
+      const randomAdversary =
+        filteredAdversaries[
+          Math.floor(Math.random() * filteredAdversaries.length)
+        ];
+      const randomLevel =
+        randomAdversary.levels[
+          Math.floor(Math.random() * randomAdversary.levels.length)
+        ];
+      setAdversary({ ...randomAdversary, selectedLevel: randomLevel });
 
-    const randomScenario =
-      filteredScenarios[
-        Math.floor(Math.random() * filteredScenarios.length)
-      ];
-    setScenario(randomScenario);
+      const randomScenario =
+        filteredScenarios[
+          Math.floor(Math.random() * filteredScenarios.length)
+        ];
+      setScenario(randomScenario);
+    }
   }
 
   function clearAll() {
@@ -104,7 +140,8 @@ function App() {
 
   const canRandomize =
     filteredSpirits.length >= playerCount &&
-    filteredBoards.length >= playerCount;
+    filteredBoards.length >= playerCount &&
+    (targetDifficulty === null || matchingCombos.length > 0);
 
   return (
     <div className="app">
@@ -123,6 +160,24 @@ function App() {
           {Array.from({ length: maxPlayers }, (_, i) => i + 1).map((n) => (
             <option key={n} value={n}>
               {n}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor="difficulty">Difficulty:</label>
+        <select
+          id="difficulty"
+          value={targetDifficulty ?? ''}
+          onChange={(e) => {
+            const val = e.target.value;
+            setTargetDifficulty(val === '' ? null : Number(val));
+            clearAll();
+          }}
+        >
+          <option value="">Any</option>
+          {Array.from({ length: maxDifficulty + 1 }, (_, i) => (
+            <option key={i} value={i}>
+              {i}
             </option>
           ))}
         </select>
@@ -173,7 +228,15 @@ function App() {
 
           {adversary && scenario && (adversary.expansion !== null || scenario.expansion !== null) && (
             <div className="game-setup">
-              <h2 className="game-setup-heading">Game Setup</h2>
+              <h2 className="game-setup-heading">
+                Game Setup
+                {adversary && scenario && (
+                  <span className="combined-difficulty">
+                    {' '}(Difficulty{' '}
+                    {adversary.selectedLevel.difficulty + scenario.difficulty})
+                  </span>
+                )}
+              </h2>
               <div className="game-setup-cards">
                 {adversary.expansion !== null && (
                   <GameSetupCard

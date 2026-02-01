@@ -206,6 +206,12 @@ h1 {
   margin-bottom: 0.75rem;
 }
 
+.combined-difficulty {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #555;
+}
+
 .game-setup-cards {
   display: flex;
   flex-direction: column;
