@@ -129,6 +129,81 @@ h1 {
   color: #5a2d82;
 }
 
+.spirit-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.spirit-card-header .player-label {
+  margin-bottom: 0;
+}
+
+.board-badge {
+  background: #d4e6f1;
+  color: #1a5276;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+}
+
+.game-setup {
+  margin-top: 2rem;
+}
+
+.game-setup-heading {
+  font-size: 1.2rem;
+  color: #2d4a22;
+  margin-bottom: 0.75rem;
+}
+
+.game-setup-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.game-setup-card {
+  background: #eae4d9;
+  border: 2px solid #b8a88a;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  text-align: left;
+}
+
+.setup-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #7a6b4e;
+  margin-bottom: 0.25rem;
+}
+
+.setup-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d4a22;
+  margin-bottom: 0.4rem;
+}
+
+.setup-details {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.setup-detail {
+  color: #555;
+  font-weight: 600;
+}
+
+.setup-expansion {
+  color: #666;
+}
+
 @media (max-width: 480px) {
   .app {
     padding: 1rem 0.75rem;
@@ -139,6 +214,10 @@ h1 {
   }
 
   .spirit-name {
+    font-size: 1.05rem;
+  }
+
+  .setup-name {
     font-size: 1.05rem;
   }
 }

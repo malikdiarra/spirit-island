@@ -1,0 +1,18 @@
+[
+  { "name": "No Scenario", "expansion": null, "difficulty": 0 },
+  { "name": "Blitz", "expansion": "Base Game", "difficulty": 0 },
+  { "name": "Guard the Isle's Heart", "expansion": "Base Game", "difficulty": 0 },
+  { "name": "Rituals of Terror", "expansion": "Base Game", "difficulty": 3 },
+  { "name": "Dahan Insurrection", "expansion": "Base Game", "difficulty": 4 },
+  { "name": "Second Wave", "expansion": "Branch & Claw", "difficulty": 1 },
+  { "name": "Powers Long Forgotten", "expansion": "Branch & Claw", "difficulty": 1 },
+  { "name": "Ward the Shores", "expansion": "Branch & Claw", "difficulty": 2 },
+  { "name": "Rituals of the Destroying Flame", "expansion": "Branch & Claw", "difficulty": 3 },
+  { "name": "Elemental Invocation", "expansion": "Jagged Earth", "difficulty": 1 },
+  { "name": "Despicable Theft", "expansion": "Jagged Earth", "difficulty": 2 },
+  { "name": "The Great River", "expansion": "Jagged Earth", "difficulty": 3 },
+  { "name": "A Diversity of Spirits", "expansion": "Feather & Flame", "difficulty": 0 },
+  { "name": "Varied Terrains", "expansion": "Feather & Flame", "difficulty": 2 },
+  { "name": "Surges of Colonialism", "expansion": "Nature Incarnate", "difficulty": 2 },
+  { "name": "Sprawl Among the Dahan", "expansion": "Nature Incarnate", "difficulty": 3 }
+]

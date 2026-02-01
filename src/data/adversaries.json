@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Brandenburg-Prussia",
+    "expansion": "Base Game",
+    "levels": [
+      { "level": 1, "difficulty": 2 },
+      { "level": 2, "difficulty": 4 },
+      { "level": 3, "difficulty": 6 },
+      { "level": 4, "difficulty": 7 },
+      { "level": 5, "difficulty": 9 },
+      { "level": 6, "difficulty": 10 }
+    ]
+  },
+  {
+    "name": "England",
+    "expansion": "Base Game",
+    "levels": [
+      { "level": 1, "difficulty": 3 },
+      { "level": 2, "difficulty": 4 },
+      { "level": 3, "difficulty": 6 },
+      { "level": 4, "difficulty": 7 },
+      { "level": 5, "difficulty": 9 },
+      { "level": 6, "difficulty": 11 }
+    ]
+  },
+  {
+    "name": "Sweden",
+    "expansion": "Base Game",
+    "levels": [
+      { "level": 1, "difficulty": 2 },
+      { "level": 2, "difficulty": 3 },
+      { "level": 3, "difficulty": 5 },
+      { "level": 4, "difficulty": 6 },
+      { "level": 5, "difficulty": 7 },
+      { "level": 6, "difficulty": 8 }
+    ]
+  },
+  {
+    "name": "France",
+    "expansion": "Branch & Claw",
+    "levels": [
+      { "level": 1, "difficulty": 3 },
+      { "level": 2, "difficulty": 5 },
+      { "level": 3, "difficulty": 7 },
+      { "level": 4, "difficulty": 8 },
+      { "level": 5, "difficulty": 9 },
+      { "level": 6, "difficulty": 10 }
+    ]
+  },
+  {
+    "name": "Habsburg Monarchy",
+    "expansion": "Jagged Earth",
+    "levels": [
+      { "level": 1, "difficulty": 2 },
+      { "level": 2, "difficulty": 3 },
+      { "level": 3, "difficulty": 5 },
+      { "level": 4, "difficulty": 6 },
+      { "level": 5, "difficulty": 8 },
+      { "level": 6, "difficulty": 9 }
+    ]
+  },
+  {
+    "name": "Russia",
+    "expansion": "Jagged Earth",
+    "levels": [
+      { "level": 1, "difficulty": 1 },
+      { "level": 2, "difficulty": 3 },
+      { "level": 3, "difficulty": 4 },
+      { "level": 4, "difficulty": 6 },
+      { "level": 5, "difficulty": 7 },
+      { "level": 6, "difficulty": 9 }
+    ]
+  },
+  {
+    "name": "Scotland",
+    "expansion": "Feather & Flame",
+    "levels": [
+      { "level": 1, "difficulty": 1 },
+      { "level": 2, "difficulty": 3 },
+      { "level": 3, "difficulty": 4 },
+      { "level": 4, "difficulty": 6 },
+      { "level": 5, "difficulty": 7 },
+      { "level": 6, "difficulty": 8 }
+    ]
+  },
+  {
+    "name": "Habsburg Mining Expedition",
+    "expansion": "Nature Incarnate",
+    "levels": [
+      { "level": 1, "difficulty": 2 },
+      { "level": 2, "difficulty": 4 },
+      { "level": 3, "difficulty": 5 },
+      { "level": 4, "difficulty": 7 },
+      { "level": 5, "difficulty": 9 },
+      { "level": 6, "difficulty": 10 }
+    ]
+  }
+]
