@@ -1,16 +1,101 @@
-# React + Vite
+# Spirit Island Randomizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web app that randomly assigns spirits, boards, adversaries, and scenarios for Spirit Island game sessions.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Random spirit and board assignment per player (1-6 players)
+- Random adversary (with level) and scenario selection
+- Target difficulty filtering — pick a combined difficulty and only matching adversary+scenario combos are used
+- Expansion toggling — enable/disable content from Base Game, Branch & Claw, Jagged Earth, Feather & Flame, and Nature Incarnate
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Node.js](https://nodejs.org/) (v18+)
+- npm
+- [Google Cloud SDK](https://cloud.google.com/sdk) (only for deployment)
 
-## Expanding the ESLint configuration
+## Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Install dependencies:
+
+```sh
+npm install
+```
+
+Start the dev server with hot reload:
+
+```sh
+make dev
+```
+
+This runs Vite's dev server, typically at `http://localhost:5173`.
+
+### Linting
+
+```sh
+npm run lint
+```
+
+### Building for production
+
+```sh
+make build
+```
+
+Output goes to `dist/`.
+
+### Preview the production build locally
+
+```sh
+npm run preview
+```
+
+### Clean build artifacts
+
+```sh
+make clean
+```
+
+## Deployment
+
+Deploy the built site to a GCP Cloud Storage bucket:
+
+```sh
+# Via environment variable
+GCS_BUCKET=gs://your-bucket-name make deploy
+
+# Or pass directly
+make deploy BUCKET=gs://your-bucket-name
+```
+
+This runs `make build` first, then syncs `dist/` to the bucket using `gsutil rsync`. The `-d` flag removes files from the bucket that are no longer in the build output.
+
+## Project structure
+
+```
+src/
+  App.jsx              # Main app component
+  App.css              # App styles
+  main.jsx             # Entry point
+  index.css            # Global styles
+  components/
+    SpiritCard.jsx      # Player spirit + board card
+    GameSetupCard.jsx   # Adversary / scenario card
+  data/
+    spirits.json        # Spirit definitions (name, expansion, complexity)
+    boards.json         # Board definitions
+    adversaries.json    # Adversaries with per-level difficulties
+    scenarios.json      # Scenarios with difficulties
+```
+
+## Adding content
+
+Game data lives in JSON files under `src/data/`. Each file is an array of objects:
+
+- **spirits.json** — `{ name, expansion, complexity }`
+- **boards.json** — `{ name, expansion }`
+- **adversaries.json** — `{ name, expansion, levels: [{ level, difficulty }] }`
+- **scenarios.json** — `{ name, expansion, difficulty }`
+
+Set `expansion` to `null` for base/default entries (e.g. "No Adversary", "No Scenario"). Otherwise use the expansion name string — it must match across all data files for the expansion toggle to work correctly.
