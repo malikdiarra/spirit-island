@@ -87,36 +87,64 @@ function App() {
   }, [targetDifficulty, maxDifficulty]);
 
   function toggleExpansion(name) {
-    setEnabledExpansions((prev) => {
-      const next = new Set(prev);
-      if (next.has(name)) {
-        next.delete(name);
-      } else {
-        next.add(name);
-      }
-      return next;
-    });
+    const nextExpansions = new Set(enabledExpansions);
+    if (nextExpansions.has(name)) {
+      nextExpansions.delete(name);
+    } else {
+      nextExpansions.add(name);
+    }
+    setEnabledExpansions(nextExpansions);
     setTargetDifficulty(null);
-    clearAll();
+
+    const newSpirits = spirits.filter((s) => nextExpansions.has(s.expansion));
+    const newBoards = boards.filter((b) => nextExpansions.has(b.expansion));
+    const newAdversaries = adversaries.filter(
+      (a) => a.expansion === null || nextExpansions.has(a.expansion)
+    );
+    const newScenarios = scenarios.filter(
+      (s) => s.expansion === null || nextExpansions.has(s.expansion)
+    );
+    const newCombos = [];
+    for (const adv of newAdversaries) {
+      for (const level of adv.levels) {
+        for (const scen of newScenarios) {
+          newCombos.push({ adversary: adv, level, scenario: scen });
+        }
+      }
+    }
+    rerollIfNeeded(
+      playerCount,
+      newSpirits,
+      newBoards,
+      newCombos,
+      newAdversaries,
+      newScenarios,
+      null
+    );
   }
 
-  function randomize() {
-    const shuffledSpirits = shuffleArray(filteredSpirits);
-    setAssignments(shuffledSpirits.slice(0, playerCount));
+  function randomize(
+    count = playerCount,
+    spiritPool = filteredSpirits,
+    boardPool = filteredBoards,
+    comboPool = matchingCombos,
+    advPool = filteredAdversaries,
+    scenPool = filteredScenarios,
+    difficulty = targetDifficulty
+  ) {
+    const shuffledSpirits = shuffleArray(spiritPool);
+    setAssignments(shuffledSpirits.slice(0, count));
 
-    const shuffledBoards = shuffleArray(filteredBoards);
-    setBoardAssignments(shuffledBoards.slice(0, playerCount));
+    const shuffledBoards = shuffleArray(boardPool);
+    setBoardAssignments(shuffledBoards.slice(0, count));
 
-    if (targetDifficulty !== null) {
-      const combo =
-        matchingCombos[Math.floor(Math.random() * matchingCombos.length)];
+    if (difficulty !== null) {
+      const combo = comboPool[Math.floor(Math.random() * comboPool.length)];
       setAdversary({ ...combo.adversary, selectedLevel: combo.level });
       setScenario(combo.scenario);
     } else {
       const randomAdversary =
-        filteredAdversaries[
-          Math.floor(Math.random() * filteredAdversaries.length)
-        ];
+        advPool[Math.floor(Math.random() * advPool.length)];
       const randomLevel =
         randomAdversary.levels[
           Math.floor(Math.random() * randomAdversary.levels.length)
@@ -124,9 +152,7 @@ function App() {
       setAdversary({ ...randomAdversary, selectedLevel: randomLevel });
 
       const randomScenario =
-        filteredScenarios[
-          Math.floor(Math.random() * filteredScenarios.length)
-        ];
+        scenPool[Math.floor(Math.random() * scenPool.length)];
       setScenario(randomScenario);
     }
   }
@@ -136,6 +162,23 @@ function App() {
     setBoardAssignments([]);
     setAdversary(null);
     setScenario(null);
+  }
+
+  function rerollIfNeeded(
+    count,
+    spiritPool,
+    boardPool,
+    comboPool,
+    advPool,
+    scenPool,
+    difficulty
+  ) {
+    if (assignments.length === 0) return;
+    if (spiritPool.length >= count && boardPool.length >= count && comboPool.length > 0) {
+      randomize(count, spiritPool, boardPool, comboPool, advPool, scenPool, difficulty);
+    } else {
+      clearAll();
+    }
   }
 
   const canRandomize =
@@ -153,8 +196,17 @@ function App() {
           id="player-count"
           value={playerCount}
           onChange={(e) => {
-            setPlayerCount(Number(e.target.value));
-            clearAll();
+            const newCount = Number(e.target.value);
+            setPlayerCount(newCount);
+            rerollIfNeeded(
+              newCount,
+              filteredSpirits,
+              filteredBoards,
+              matchingCombos,
+              filteredAdversaries,
+              filteredScenarios,
+              targetDifficulty
+            );
           }}
         >
           {Array.from({ length: maxPlayers }, (_, i) => i + 1).map((n) => (
@@ -170,8 +222,23 @@ function App() {
           value={targetDifficulty ?? ''}
           onChange={(e) => {
             const val = e.target.value;
-            setTargetDifficulty(val === '' ? null : Number(val));
-            clearAll();
+            const newDifficulty = val === '' ? null : Number(val);
+            setTargetDifficulty(newDifficulty);
+            const newMatchingCombos =
+              newDifficulty === null
+                ? allCombos
+                : allCombos.filter(
+                    (c) => c.level.difficulty + c.scenario.difficulty === newDifficulty
+                  );
+            rerollIfNeeded(
+              playerCount,
+              filteredSpirits,
+              filteredBoards,
+              newMatchingCombos,
+              filteredAdversaries,
+              filteredScenarios,
+              newDifficulty
+            );
           }}
         >
           <option value="">Any</option>
@@ -184,7 +251,7 @@ function App() {
 
         <button
           className="randomize-btn"
-          onClick={randomize}
+          onClick={() => randomize()}
           disabled={!canRandomize}
         >
           {assignments.length ? 'Re-roll' : 'Randomize'}
