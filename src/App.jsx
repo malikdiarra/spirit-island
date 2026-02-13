@@ -27,12 +27,68 @@ function shuffleArray(array) {
   return shuffled;
 }
 
+function parseUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  const spiritNames = params.get('spirits')?.split(',').filter(Boolean) || [];
+  const boardNames = params.get('boards')?.split(',').filter(Boolean) || [];
+  const adversaryName = params.get('adversary');
+  const adversaryLevel = params.get('level') ? Number(params.get('level')) : null;
+  const scenarioName = params.get('scenario');
+
+  const foundSpirits = spiritNames
+    .map((name) => spirits.find((s) => s.name === name))
+    .filter(Boolean);
+  const foundBoards = boardNames
+    .map((name) => boards.find((b) => b.name === name))
+    .filter(Boolean);
+  const foundAdversary = adversaries.find((a) => a.name === adversaryName);
+  const foundLevel = foundAdversary?.levels.find((l) => l.level === adversaryLevel);
+  const foundScenario = scenarios.find((s) => s.name === scenarioName);
+
+  if (
+    foundSpirits.length > 0 &&
+    foundSpirits.length === spiritNames.length &&
+    foundBoards.length === foundSpirits.length &&
+    foundAdversary &&
+    foundLevel &&
+    foundScenario
+  ) {
+    return {
+      assignments: foundSpirits,
+      boardAssignments: foundBoards,
+      adversary: { ...foundAdversary, selectedLevel: foundLevel },
+      scenario: foundScenario,
+      playerCount: foundSpirits.length,
+    };
+  }
+  return null;
+}
+
+function updateUrl(assignments, boardAssignments, adversary, scenario) {
+  if (assignments.length === 0) {
+    window.history.replaceState({}, '', window.location.pathname);
+    return;
+  }
+  const params = new URLSearchParams();
+  params.set('spirits', assignments.map((s) => s.name).join(','));
+  params.set('boards', boardAssignments.map((b) => b.name).join(','));
+  if (adversary) {
+    params.set('adversary', adversary.name);
+    params.set('level', String(adversary.selectedLevel.level));
+  }
+  if (scenario) {
+    params.set('scenario', scenario.name);
+  }
+  window.history.replaceState({}, '', `?${params.toString()}`);
+}
+
 function App() {
-  const [playerCount, setPlayerCount] = useState(2);
-  const [assignments, setAssignments] = useState([]);
-  const [boardAssignments, setBoardAssignments] = useState([]);
-  const [adversary, setAdversary] = useState(null);
-  const [scenario, setScenario] = useState(null);
+  const [urlState] = useState(() => parseUrlState());
+  const [playerCount, setPlayerCount] = useState(urlState?.playerCount ?? 2);
+  const [assignments, setAssignments] = useState(urlState?.assignments ?? []);
+  const [boardAssignments, setBoardAssignments] = useState(urlState?.boardAssignments ?? []);
+  const [adversary, setAdversary] = useState(urlState?.adversary ?? null);
+  const [scenario, setScenario] = useState(urlState?.scenario ?? null);
   const [enabledExpansions, setEnabledExpansions] = useState(
     () => new Set(ALL_EXPANSIONS)
   );
@@ -85,6 +141,10 @@ function App() {
       setTargetDifficulty(null);
     }
   }, [targetDifficulty, maxDifficulty]);
+
+  useEffect(() => {
+    updateUrl(assignments, boardAssignments, adversary, scenario);
+  }, [assignments, boardAssignments, adversary, scenario]);
 
   function toggleExpansion(name) {
     const nextExpansions = new Set(enabledExpansions);
