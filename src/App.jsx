@@ -31,6 +31,7 @@ function parseUrlState() {
   const params = new URLSearchParams(window.location.search);
   const spiritNames = params.get('spirits')?.split(',').filter(Boolean) || [];
   const boardNames = params.get('boards')?.split(',').filter(Boolean) || [];
+  const aspectNames = params.get('aspects')?.split(',') || [];
   const adversaryName = params.get('adversary');
   const adversaryLevel = params.get('level') ? Number(params.get('level')) : null;
   const scenarioName = params.get('scenario');
@@ -41,6 +42,11 @@ function parseUrlState() {
   const foundBoards = boardNames
     .map((name) => boards.find((b) => b.name === name))
     .filter(Boolean);
+  const foundAspects = foundSpirits.map((spirit, i) => {
+    const aspectName = aspectNames[i];
+    if (!aspectName) return null;
+    return spirit.aspects?.find((a) => a.name === aspectName) || null;
+  });
   const foundAdversary = adversaries.find((a) => a.name === adversaryName);
   const foundLevel = foundAdversary?.levels.find((l) => l.level === adversaryLevel);
   const foundScenario = scenarios.find((s) => s.name === scenarioName);
@@ -56,6 +62,7 @@ function parseUrlState() {
     return {
       assignments: foundSpirits,
       boardAssignments: foundBoards,
+      aspectAssignments: foundAspects,
       adversary: { ...foundAdversary, selectedLevel: foundLevel },
       scenario: foundScenario,
       playerCount: foundSpirits.length,
@@ -64,7 +71,7 @@ function parseUrlState() {
   return null;
 }
 
-function updateUrl(assignments, boardAssignments, adversary, scenario) {
+function updateUrl(assignments, boardAssignments, aspectAssignments, adversary, scenario) {
   if (assignments.length === 0) {
     window.history.replaceState({}, '', window.location.pathname);
     return;
@@ -72,6 +79,7 @@ function updateUrl(assignments, boardAssignments, adversary, scenario) {
   const params = new URLSearchParams();
   params.set('spirits', assignments.map((s) => s.name).join(','));
   params.set('boards', boardAssignments.map((b) => b.name).join(','));
+  params.set('aspects', aspectAssignments.map((a) => a?.name || '').join(','));
   if (adversary) {
     params.set('adversary', adversary.name);
     params.set('level', String(adversary.selectedLevel.level));
@@ -87,6 +95,7 @@ function App() {
   const [playerCount, setPlayerCount] = useState(urlState?.playerCount ?? 2);
   const [assignments, setAssignments] = useState(urlState?.assignments ?? []);
   const [boardAssignments, setBoardAssignments] = useState(urlState?.boardAssignments ?? []);
+  const [aspectAssignments, setAspectAssignments] = useState(urlState?.aspectAssignments ?? []);
   const [adversary, setAdversary] = useState(urlState?.adversary ?? null);
   const [scenario, setScenario] = useState(urlState?.scenario ?? null);
   const [enabledExpansions, setEnabledExpansions] = useState(
@@ -143,8 +152,8 @@ function App() {
   }, [targetDifficulty, maxDifficulty]);
 
   useEffect(() => {
-    updateUrl(assignments, boardAssignments, adversary, scenario);
-  }, [assignments, boardAssignments, adversary, scenario]);
+    updateUrl(assignments, boardAssignments, aspectAssignments, adversary, scenario);
+  }, [assignments, boardAssignments, aspectAssignments, adversary, scenario]);
 
   function toggleExpansion(name) {
     const nextExpansions = new Set(enabledExpansions);
@@ -179,7 +188,8 @@ function App() {
       newCombos,
       newAdversaries,
       newScenarios,
-      null
+      null,
+      nextExpansions
     );
   }
 
@@ -190,10 +200,22 @@ function App() {
     comboPool = matchingCombos,
     advPool = filteredAdversaries,
     scenPool = filteredScenarios,
-    difficulty = targetDifficulty
+    difficulty = targetDifficulty,
+    expansions = enabledExpansions
   ) {
     const shuffledSpirits = shuffleArray(spiritPool);
-    setAssignments(shuffledSpirits.slice(0, count));
+    const selectedSpirits = shuffledSpirits.slice(0, count);
+    setAssignments(selectedSpirits);
+
+    const selectedAspects = selectedSpirits.map((spirit) => {
+      const availableAspects = (spirit.aspects || []).filter((a) =>
+        expansions.has(a.expansion)
+      );
+      if (availableAspects.length === 0) return null;
+      const options = [null, ...availableAspects];
+      return options[Math.floor(Math.random() * options.length)];
+    });
+    setAspectAssignments(selectedAspects);
 
     const shuffledBoards = shuffleArray(boardPool);
     setBoardAssignments(shuffledBoards.slice(0, count));
@@ -220,6 +242,7 @@ function App() {
   function clearAll() {
     setAssignments([]);
     setBoardAssignments([]);
+    setAspectAssignments([]);
     setAdversary(null);
     setScenario(null);
   }
@@ -231,11 +254,12 @@ function App() {
     comboPool,
     advPool,
     scenPool,
-    difficulty
+    difficulty,
+    expansions = enabledExpansions
   ) {
     if (assignments.length === 0) return;
     if (spiritPool.length >= count && boardPool.length >= count && comboPool.length > 0) {
-      randomize(count, spiritPool, boardPool, comboPool, advPool, scenPool, difficulty);
+      randomize(count, spiritPool, boardPool, comboPool, advPool, scenPool, difficulty, expansions);
     } else {
       clearAll();
     }
@@ -349,6 +373,7 @@ function App() {
                 playerNumber={i + 1}
                 spirit={spirit}
                 board={boardAssignments[i]}
+                aspect={aspectAssignments[i]}
               />
             ))}
           </div>

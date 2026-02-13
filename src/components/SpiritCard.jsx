@@ -1,4 +1,4 @@
-function SpiritCard({ playerNumber, spirit, board }) {
+function SpiritCard({ playerNumber, spirit, board, aspect }) {
   const complexityClass = spirit.complexity.toLowerCase().replace(' ', '-');
 
   return (
@@ -8,6 +8,12 @@ function SpiritCard({ playerNumber, spirit, board }) {
         {board && <span className="board-badge">Board {board.name}</span>}
       </div>
       <div className="spirit-name">{spirit.name}</div>
+      {aspect && (
+        <div className="spirit-aspect">
+          <span className="aspect-name">{aspect.name}</span>
+          <span className="aspect-expansion">{aspect.expansion}</span>
+        </div>
+      )}
       <div className="spirit-details">
         <span className="spirit-expansion">{spirit.expansion}</span>
         <span className={`spirit-complexity ${complexityClass}`}>
