@@ -120,14 +120,7 @@
       { "name": "Lair", "expansion": "Nature Incarnate" }
     ]
   },
-  {
-    "name": "Many Minds Move as One",
-    "expansion": "Jagged Earth",
-    "complexity": "Moderate",
-    "aspects": [
-      { "name": "Intensify", "expansion": "Nature Incarnate" }
-    ]
-  },
+  { "name": "Many Minds Move as One", "expansion": "Jagged Earth", "complexity": "Moderate" },
   { "name": "Shifting Memory of Ages", "expansion": "Jagged Earth", "complexity": "Moderate" },
   { "name": "Grinning Trickster Stirs Up Trouble", "expansion": "Jagged Earth", "complexity": "Moderate" },
   { "name": "Shroud of Silent Mist", "expansion": "Jagged Earth", "complexity": "High" },
@@ -135,25 +128,9 @@
   { "name": "Stone's Unyielding Defiance", "expansion": "Jagged Earth", "complexity": "Moderate" },
   { "name": "Fractured Days Split the Sky", "expansion": "Jagged Earth", "complexity": "Very High" },
   { "name": "Starlight Seeks Its Form", "expansion": "Jagged Earth", "complexity": "Very High" },
-  {
-    "name": "Volcano Looming High",
-    "expansion": "Jagged Earth",
-    "complexity": "Moderate",
-    "aspects": [
-      { "name": "Eruptive", "expansion": "Nature Incarnate" }
-    ]
-  },
-
-  {
-    "name": "Downpour Drenches the World",
-    "expansion": "Feather & Flame",
-    "complexity": "High",
-    "aspects": [
-      { "name": "Deluge", "expansion": "Nature Incarnate" }
-    ]
-  },
+  { "name": "Volcano Looming High", "expansion": "Jagged Earth", "complexity": "Moderate" },
+  { "name": "Downpour Drenches the World", "expansion": "Feather & Flame", "complexity": "High" },
   { "name": "Finder of Paths Unseen", "expansion": "Feather & Flame", "complexity": "Very High" },
-
   { "name": "Breath of Darkness Down Your Spine", "expansion": "Nature Incarnate", "complexity": "High" },
   { "name": "Devouring Teeth Lurk Underfoot", "expansion": "Nature Incarnate", "complexity": "Moderate" },
   { "name": "Ember-Eyed Behemoth", "expansion": "Nature Incarnate", "complexity": "High" },
@@ -164,7 +141,7 @@
   { "name": "Rising Heat of Stone and Sand", "expansion": "Nature Incarnate", "complexity": "Moderate" },
   { "name": "Sun-Bright Whirlwind", "expansion": "Nature Incarnate", "complexity": "High" },
   { "name": "Towering Roots of the Jungle", "expansion": "Nature Incarnate", "complexity": "Moderate" },
-  { "name": "Wandering Voice Keens Deathknell", "expansion": "Nature Incarnate", "complexity": "High" },
+  { "name": "Wandering Voice Keens Delirium", "expansion": "Nature Incarnate", "complexity": "High" },
   { "name": "Wounded Waters Bleeding", "expansion": "Nature Incarnate", "complexity": "High" },
   { "name": "Dances Up Earthquakes", "expansion": "Nature Incarnate", "complexity": "High" }
 ]
